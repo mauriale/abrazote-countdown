@@ -13,30 +13,60 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             position: relative;
+            background: #000;
+        }
+
+        /* Video de fondo */
+        .video-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+            opacity: 0.4;
+            filter: blur(2px) brightness(0.7);
+        }
+
+        /* Overlay para mejor contraste */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hearts {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
             pointer-events: none;
+            z-index: 2;
         }
 
         .heart {
             position: absolute;
-            font-size: 20px;
-            animation: float 10s infinite;
+            font-size: 24px;
+            animation: float 12s infinite;
             opacity: 0;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
         }
 
         @keyframes float {
@@ -45,10 +75,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.8;
+                opacity: 0.9;
             }
             90% {
-                opacity: 0.8;
+                opacity: 0.9;
             }
             100% {
                 transform: translateY(-100vh) rotate(360deg);
@@ -57,42 +87,49 @@
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 50px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 30px 20px;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
             text-align: center;
-            max-width: 600px;
-            width: 90%;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease-in;
+            max-width: 95%;
+            width: 400px;
+            animation: fadeIn 1.5s ease-in;
             position: relative;
-            z-index: 1;
+            z-index: 3;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(30px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
         h1 {
-            color: #764ba2;
-            font-size: 2.2em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            line-height: 1.3;
+            color: #fff;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5),
+                         0 0 20px rgba(255, 255, 255, 0.3);
+            line-height: 1.4;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .emoji {
-            font-size: 4em;
-            margin: 20px 0;
-            animation: pulse 2s ease-in-out infinite;
+            font-size: 3em;
+            margin: 15px 0;
+            animation: pulse 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
         }
 
         @keyframes pulse {
@@ -100,57 +137,70 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.1);
+                transform: scale(1.15);
             }
         }
 
         .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 25px 0;
         }
 
         .time-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 15px 10px;
             border-radius: 15px;
-            min-width: 100px;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .time-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .time-value {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
-            color: white;
+            color: #fff;
             display: block;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5),
+                         0 0 15px rgba(255, 255, 255, 0.3);
+            line-height: 1;
         }
 
         .time-label {
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.9);
-            margin-top: 5px;
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.95);
+            margin-top: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         .message {
-            color: #555;
-            font-size: 1.1em;
+            color: #fff;
+            font-size: 1em;
             margin-top: 20px;
             font-style: italic;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            line-height: 1.5;
+            padding: 0 10px;
         }
 
         .celebration {
             display: none;
-            font-size: 3em;
+            font-size: 2.5em;
             animation: bounce 1s infinite;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
         }
 
         @keyframes bounce {
@@ -158,21 +208,67 @@
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-20px);
+                transform: translateY(-15px);
             }
         }
 
         .timezone-info {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-            padding: 10px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+        /* Optimización para móviles pequeños */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 1.3em;
+            }
+            
+            .time-value {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 25px 15px;
+            }
+        }
+
+        /* Brillo sutil en los bordes */
+        @keyframes borderGlow {
+            0%, 100% {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                            0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                            0 0 20px rgba(255, 182, 193, 0.3);
+            }
+            50% {
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                            0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+                            0 0 30px rgba(255, 182, 193, 0.6);
+            }
+        }
+
+        .container {
+            animation: fadeIn 1.5s ease-in, borderGlow 3s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
+    <!-- Video de fondo -->
+    <video class="video-background" autoplay muted loop playsinline>
+        <source src="https://drive.google.com/uc?export=download&id=1eG9kqS2o-VUnevfSZW5wJLfNvDcl3kYd" type="video/mp4">
+    </video>
+
+    <!-- Overlay de color -->
+    <div class="overlay"></div>
+    
+    <!-- Corazones flotantes -->
     <div class="hearts" id="hearts"></div>
     
     <div class="container">
@@ -200,25 +296,25 @@
 
         <div class="celebration" id="celebration">🎉 ¡Es hora del abrazote! 🎊</div>
         <div class="message" id="message">Cada segundo cuenta hasta ese momento especial...</div>
-        <div class="timezone-info">⏰ 9 de Enero 2026 - 1:25 PM (Hora de Seattle/Pacific Time)</div>
+        <div class="timezone-info">⏰ 9 de Enero 2026 - 1:25 PM<br>Hora de Seattle</div>
     </div>
 
     <script>
         // Crear corazones flotantes
         function createHearts() {
             const heartsContainer = document.getElementById('hearts');
-            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💓'];
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💓', '🌹'];
             
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 12; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'heart';
                     heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
                     heart.style.left = Math.random() * 100 + '%';
                     heart.style.animationDelay = Math.random() * 5 + 's';
-                    heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+                    heart.style.animationDuration = (Math.random() * 6 + 10) + 's';
                     heartsContainer.appendChild(heart);
-                }, i * 300);
+                }, i * 400);
             }
         }
 
@@ -226,13 +322,8 @@
 
         // Fecha objetivo específica: 9 de enero de 2026 a las 13:25 hora de Seattle
         function getTargetTime() {
-            // Crear la fecha en formato que JavaScript puede interpretar correctamente
-            // Enero es mes 0 en JavaScript
             const targetDateString = '2026-01-09T13:25:00';
-            
-            // Crear la fecha en hora de Seattle (Pacific Time)
             const target = new Date(targetDateString + '-08:00'); // PST es UTC-8
-            
             return target;
         }
 
@@ -277,7 +368,13 @@
         setInterval(updateCountdown, 1000);
 
         // Agregar más corazones periódicamente
-        setInterval(createHearts, 15000);
+        setInterval(createHearts, 18000);
+
+        // Asegurar que el video se reproduzca en iOS
+        const video = document.querySelector('.video-background');
+        video.play().catch(e => {
+            console.log('Autoplay prevented:', e);
+        });
     </script>
 </body>
 </html>
