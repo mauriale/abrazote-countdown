@@ -200,7 +200,7 @@
 
         <div class="celebration" id="celebration">🎉 ¡Es hora del abrazote! 🎊</div>
         <div class="message" id="message">Cada segundo cuenta hasta ese momento especial...</div>
-        <div class="timezone-info">⏰ Hora objetivo: 1:25 PM (Hora de Seattle/Pacific Time)</div>
+        <div class="timezone-info">⏰ 9 de Enero 2026 - 1:25 PM (Hora de Seattle/Pacific Time)</div>
     </div>
 
     <script>
@@ -224,44 +224,27 @@
 
         createHearts();
 
-        // Función para obtener la próxima ocurrencia de 1:25 PM hora de Seattle
-        function getNextTargetTime() {
-            const now = new Date();
+        // Fecha objetivo específica: 9 de enero de 2026 a las 13:25 hora de Seattle
+        function getTargetTime() {
+            // Crear la fecha en formato que JavaScript puede interpretar correctamente
+            // Enero es mes 0 en JavaScript
+            const targetDateString = '2026-01-09T13:25:00';
             
-            // Crear fecha objetivo en hora de Seattle (Pacific Time)
-            // Usamos toLocaleString para convertir a hora de Seattle
-            const seattleTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+            // Crear la fecha en hora de Seattle (Pacific Time)
+            const target = new Date(targetDateString + '-08:00'); // PST es UTC-8
             
-            // Configurar la hora objetivo (13:25 = 1:25 PM)
-            const target = new Date(seattleTime);
-            target.setHours(13, 25, 0, 0);
-            
-            // Si ya pasó hoy, configurar para mañana
-            if (seattleTime >= target) {
-                target.setDate(target.getDate() + 1);
-            }
-            
-            // Convertir de vuelta a UTC para cálculos correctos
-            const seattleOffset = target.getTimezoneOffset();
-            const nowOffset = now.getTimezoneOffset();
-            const offsetDifference = (seattleOffset - nowOffset) * 60000;
-            
-            return new Date(target.getTime() - offsetDifference);
+            return target;
         }
 
         function updateCountdown() {
             const now = new Date();
-            const target = getNextTargetTime();
+            const target = getTargetTime();
             const difference = target - now;
 
             if (difference <= 0) {
                 document.getElementById('celebration').style.display = 'block';
                 document.getElementById('countdown').style.display = 'none';
-                document.getElementById('message').textContent = '¡Llegó el momento! 🎉';
-                // Recargar después de 5 segundos para el próximo día
-                setTimeout(() => {
-                    location.reload();
-                }, 5000);
+                document.getElementById('message').textContent = '¡Llegó el momento del abrazote! 🎉';
                 return;
             }
 
@@ -282,6 +265,10 @@
                 document.getElementById('message').textContent = '¡Hoy es el día! Preparando el mejor abrazo...';
             } else if (days === 0) {
                 document.getElementById('message').textContent = 'Hoy es el gran día del abrazote...';
+            } else if (days === 1) {
+                document.getElementById('message').textContent = '¡Mañana es el día! La emoción crece...';
+            } else if (days <= 3) {
+                document.getElementById('message').textContent = 'Solo quedan ' + days + ' días para el abrazote especial...';
             }
         }
 
